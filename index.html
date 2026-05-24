@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meera's Farm — Nature Escape Minutes from Navi Mumbai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --terracotta: #C4683A;
+    --terracotta-light: #E8A882;
+    --cream: #F7F1E8;
+    --parchment: #EDE5D4;
+    --bark: #3B2D1F;
+    --bark-mid: #6B4C32;
+    --moss: #4A5C3A;
+    --moss-light: #7A8F68;
+    --gold: #BFA060;
+    --gold-light: #D9C08A;
+    --white: #FDFAF5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--bark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: transparent;
+    transition: background 0.4s, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(247,241,232,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(191,160,96,0.25);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color 0.4s;
+  }
+  nav.scrolled .nav-logo { color: var(--bark); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(253,250,245,0.85);
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 400;
+  }
+  nav.scrolled .nav-links a { color: var(--bark-mid); }
+  .nav-links a:hover { color: var(--gold-light); }
+  nav.scrolled .nav-links a:hover { color: var(--terracotta); }
+  .nav-cta {
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.55rem 1.4rem;
+    border: 1px solid rgba(253,250,245,0.6);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.3s;
+    font-weight: 400;
+  }
+  nav.scrolled .nav-cta { border-color: var(--terracotta); color: var(--terracotta); }
+  .nav-cta:hover { background: rgba(253,250,245,0.15); }
+  nav.scrolled .nav-cta:hover { background: var(--terracotta); color: var(--white); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex; align-items: flex-end;
+    padding: 0 4rem 5rem;
+    background: url('https://a0.muscache.com/im/pictures/hosting/Hosting-1343811467237191035/original/9a219269-e955-449c-b07a-4da0a8a7fca5.jpeg') center/cover no-repeat;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(30,18,8,0.25) 0%,
+      rgba(30,18,8,0.1) 35%,
+      rgba(30,18,8,0.55) 70%,
+      rgba(30,18,8,0.82) 100%
+    );
+  }
+  .hero-badge {
+    position: absolute; top: 6.5rem; left: 4rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    background: rgba(191,160,96,0.22);
+    border: 1px solid rgba(191,160,96,0.5);
+    backdrop-filter: blur(8px);
+    padding: 0.45rem 1rem;
+    border-radius: 2px;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    animation: fadeDown 1s 0.3s both;
+  }
+  .star { color: var(--gold); font-size: 0.8rem; }
+  .hero-content { position: relative; z-index: 1; max-width: 720px; animation: fadeUp 1.1s 0.2s both; }
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--terracotta-light); margin-bottom: 1rem; font-weight: 400;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.2rem);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.08;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .hero-title em { font-style: italic; color: var(--gold-light); }
+  .hero-desc {
+    font-size: 1rem; color: rgba(253,250,245,0.78);
+    max-width: 460px; line-height: 1.75; margin-bottom: 2.4rem; font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--terracotta);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.9rem 2.2rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.3s, transform 0.2s;
+    font-weight: 400;
+    border: none; cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--bark-mid); transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-block;
+    color: rgba(253,250,245,0.8);
+    text-decoration: none;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    border: 1px solid rgba(253,250,245,0.35);
+    transition: all 0.3s;
+    font-weight: 400;
+  }
+  .btn-ghost:hover { background: rgba(253,250,245,0.12); color: var(--white); }
+  .scroll-hint {
+    position: absolute; bottom: 2rem; right: 4rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(253,250,245,0.5);
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, rgba(253,250,245,0.5), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%,100%{opacity:0.5;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.1)} }
+
+  /* STATS STRIP */
+  .stats-strip {
+    background: var(--bark);
+    padding: 2.4rem 4rem;
+    display: flex; justify-content: space-around; align-items: center;
+    gap: 2rem;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem; font-weight: 600;
+    color: var(--gold-light); display: block;
+  }
+  .stat-label {
+    font-size: 0.68rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(253,250,245,0.55);
+    margin-top: 0.25rem;
+  }
+  .stat-divider { width: 1px; height: 48px; background: rgba(253,250,245,0.12); }
+
+  /* SECTIONS COMMON */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--terracotta); margin-bottom: 1rem; font-weight: 400;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300; line-height: 1.15;
+    color: var(--bark);
+    margin-bottom: 1.5rem;
+  }
+  .section-title em { font-style: italic; color: var(--moss); }
+
+  /* STORY SECTION */
+  .story { background: var(--white); }
+  .story-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+  .story-img-wrap {
+    position: relative;
+  }
+  .story-img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 2px;
+    display: block;
+  }
+  .story-img-accent {
+    position: absolute; top: -1.5rem; right: -1.5rem;
+    width: 55%; aspect-ratio: 1;
+    object-fit: cover; border-radius: 2px;
+    border: 6px solid var(--white);
+  }
+  .origin-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--parchment); border-radius: 2px;
+    padding: 0.35rem 0.8rem; font-size: 0.72rem;
+    letter-spacing: 0.1em; color: var(--bark-mid);
+    margin-bottom: 0.5rem; margin-right: 0.5rem;
+    border: 1px solid rgba(107,76,50,0.15);
+  }
+  .story-body { font-size: 1rem; line-height: 1.85; color: var(--bark-mid); font-weight: 300; margin-bottom: 1.5rem; }
+  .origins-grid { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1.5rem 0; }
+
+  /* HIGHLIGHTS */
+  .highlights { background: var(--cream); }
+  .highlights-inner { max-width: 1200px; margin: 0 auto; }
+  .highlights-header { text-align: center; margin-bottom: 4rem; }
+  .cards-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px;
+    background: rgba(107,76,50,0.1);
+    border: 1.5px solid rgba(107,76,50,0.1);
+    border-radius: 4px; overflow: hidden;
+  }
+  .highlight-card {
+    background: var(--white);
+    padding: 2.5rem 2rem;
+    transition: background 0.3s;
+  }
+  .highlight-card:hover { background: var(--parchment); }
+  .card-icon { font-size: 1.8rem; margin-bottom: 1.2rem; display: block; }
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600;
+    color: var(--bark); margin-bottom: 0.75rem;
+  }
+  .card-body { font-size: 0.88rem; line-height: 1.75; color: var(--bark-mid); font-weight: 300; }
+
+  /* GALLERY */
+  .gallery { background: var(--bark); padding: 5rem 0; }
+  .gallery-inner { max-width: 1200px; margin: 0 auto; padding: 0 4rem; }
+  .gallery-header { margin-bottom: 2.5rem; }
+  .gallery-header .section-label { color: var(--gold-light); }
+  .gallery-header .section-title { color: var(--white); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-template-rows: 240px 240px;
+    gap: 4px;
+  }
+  .gallery-img {
+    object-fit: cover; width: 100%; height: 100%; display: block;
+    border-radius: 1px;
+    filter: brightness(0.92) saturate(0.95);
+    transition: filter 0.4s, transform 0.4s;
+    overflow: hidden;
+  }
+  .gallery-img:hover { filter: brightness(1.02) saturate(1.1); }
+  .gallery-item { overflow: hidden; border-radius: 2px; }
+  .gallery-item.tall { grid-row: span 2; }
+
+  /* AMENITIES */
+  .amenities { background: var(--parchment); }
+  .amenities-inner { max-width: 1200px; margin: 0 auto; }
+  .amenities-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+    margin-top: 3rem;
+  }
+  .amenity {
+    display: flex; align-items: center; gap: 0.8rem;
+    padding: 1rem 1.2rem;
+    background: var(--white); border-radius: 2px;
+    border: 1px solid rgba(107,76,50,0.1);
+    font-size: 0.82rem; color: var(--bark-mid);
+    font-weight: 400; letter-spacing: 0.02em;
+  }
+  .amenity-icon { font-size: 1.2rem; }
+
+  /* REVIEWS */
+  .reviews { background: var(--white); }
+  .reviews-inner { max-width: 1200px; margin: 0 auto; }
+  .reviews-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+  .rating-big {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem; font-weight: 300; color: var(--bark);
+    line-height: 1;
+  }
+  .rating-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bark-mid); margin-top: 0.3rem; }
+  .stars-row { display: flex; gap: 0.25rem; margin-top: 0.5rem; }
+  .star-gold { color: var(--gold); font-size: 1.1rem; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .review-card {
+    padding: 1.8rem;
+    border: 1px solid rgba(107,76,50,0.12);
+    border-radius: 2px;
+    background: var(--cream);
+  }
+  .review-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 1rem; }
+  .review-text { font-size: 0.9rem; line-height: 1.75; color: var(--bark-mid); font-weight: 300; margin-bottom: 1.2rem; font-style: italic; }
+  .review-author { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bark); font-weight: 500; }
+
+  /* HOST */
+  .host { background: var(--bark); color: var(--white); }
+  .host-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: center;
+  }
+  .host-img-wrap { position: relative; }
+  .host-img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    border-radius: 2px;
+    filter: sepia(0.15) brightness(0.95);
+  }
+  .host-badge {
+    position: absolute; bottom: 2rem; left: 2rem;
+    background: var(--gold);
+    color: var(--bark);
+    padding: 0.6rem 1.2rem;
+    border-radius: 2px;
+    font-size: 0.72rem; letter-spacing: 0.15em;
+    text-transform: uppercase; font-weight: 500;
+  }
+  .host .section-label { color: var(--gold-light); }
+  .host .section-title { color: var(--white); }
+  .host .section-title em { color: var(--gold-light); }
+  .host-bio { font-size: 0.95rem; line-height: 1.8; color: rgba(253,250,245,0.72); font-weight: 300; margin-bottom: 2rem; }
+  .host-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .host-fact {
+    padding: 1.2rem;
+    border: 1px solid rgba(253,250,245,0.12);
+    border-radius: 2px;
+  }
+  .host-fact-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.4rem; }
+  .host-fact-val { font-size: 0.88rem; color: rgba(253,250,245,0.8); font-weight: 300; }
+
+  /* CTA */
+  .cta-section {
+    background: var(--terracotta);
+    padding: 7rem 4rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: 'मीरा';
+    position: absolute; font-family: 'Cormorant Garamond', serif;
+    font-size: 20rem; font-weight: 300;
+    color: rgba(255,255,255,0.06);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; white-space: nowrap;
+  }
+  .cta-label { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(253,250,245,0.7); margin-bottom: 1.2rem; }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 300; color: var(--white);
+    line-height: 1.1; margin-bottom: 1.5rem;
+  }
+  .cta-sub { font-size: 1rem; color: rgba(253,250,245,0.78); margin-bottom: 3rem; font-weight: 300; }
+  .btn-white {
+    display: inline-block;
+    background: var(--white);
+    color: var(--terracotta);
+    text-decoration: none;
+    padding: 1rem 2.8rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  .btn-white:hover { background: var(--bark); color: var(--white); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--bark);
+    color: rgba(253,250,245,0.5);
+    padding: 3rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(253,250,245,0.08);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 600;
+    color: var(--gold-light); letter-spacing: 0.04em;
+  }
+  .footer-loc { font-size: 0.75rem; letter-spacing: 0.08em; margin-top: 0.25rem; }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { color: rgba(253,250,245,0.5); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.08em; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-copy { font-size: 0.72rem; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(30px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity:0; transform: translateY(-20px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+  .reveal { opacity:0; transform: translateY(28px); transition: opacity 0.8s, transform 0.8s; }
+  .reveal.visible { opacity:1; transform: translateY(0); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .hero-badge { left: 1.5rem; top: 5rem; }
+    section { padding: 4rem 1.5rem; }
+    .story-inner, .host-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .story-img-accent { display: none; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .amenities-grid { grid-template-columns: 1fr 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-item.tall { grid-row: span 1; }
+    .stats-strip { flex-wrap: wrap; gap: 1.5rem; }
+    .stat-divider { display: none; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+    .reviews-header { flex-direction: column; gap: 1rem; }
+    .host-facts { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Meera's Farm</a>
+  <ul class="nav-links">
+    <li><a href="#story">The Story</a></li>
+    <li><a href="#highlights">Experience</a></li>
+    <li><a href="#amenities">Amenities</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#host">Host</a></li>
+  </ul>
+  <a href="https://www.airbnb.co.in/rooms/1343811467237191035" target="_blank" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="star">★</span> 4.88 Rating &nbsp;·&nbsp; Superhost &nbsp;·&nbsp; Near Navi Mumbai
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Mahalungi, Maharashtra</p>
+    <h1 class="hero-title">A World Gathered<br>In One <em>Sacred Farm</em></h1>
+    <p class="hero-desc">Minutes from Navi Mumbai, a lifetime away from the ordinary. Exposed brick, teak wood, and artifacts from six continents await you at Meera's Farm.</p>
+    <div class="hero-actions">
+      <a href="https://www.airbnb.co.in/rooms/1343811467237191035" target="_blank" class="btn-primary">Reserve Your Stay</a>
+      <a href="#story" class="btn-ghost">Discover More</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stat">
+    <span class="stat-num">★ 4.88</span>
+    <span class="stat-label">Guest Rating</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-num">~45</span>
+    <span class="stat-label">Mins from Mumbai</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-num">6+</span>
+    <span class="stat-label">Continents of Artifacts</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-num">100%</span>
+    <span class="stat-label">Host Response Rate</span>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="story-inner">
+    <div class="story-img-wrap reveal">
+      <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1343811467237191035/original/e782569b-15f4-473b-a5c3-e825c1789096.jpeg" alt="Bedroom at Meera's Farm" class="story-img">
+      <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1343811467237191035/original/d1590a0e-6c2b-4afc-ac07-3895f8d554b0.jpeg" alt="Farm view" class="story-img-accent">
+    </div>
+    <div class="reveal" style="transition-delay:0.15s">
+      <p class="section-label">Our Story</p>
+      <h2 class="section-title">A Farm Built From<br><em>The Whole World</em></h2>
+      <p class="story-body">Every corner of Meera's Farm tells a story. The exposed bricks were fired in Godhra, Gujarat. The teak furniture was handcrafted by artisans in Saharanpur. The roof tiles came from Monier in Nashik.</p>
+      <p class="story-body">And then the journey goes further — Balinese statues, Central American folk art, Himalayan pieces from Nepal. This is not a farm stay. It is a curated world, assembled with love, waiting for you to walk through it.</p>
+      <p class="story-body" style="color:var(--moss); font-style:italic; border-left: 2px solid var(--moss-light); padding-left: 1.2rem;">A sacred space blessed by Lord Ganesha — free from alcohol, devoted to peace and genuine human connection.</p>
+      <p class="section-label" style="margin-top:2rem; margin-bottom:0.8rem;">Artifacts sourced from</p>
+      <div class="origins-grid">
+        <span class="origin-tag">🇮🇩 Bali, Indonesia</span>
+        <span class="origin-tag">🇳🇵 Nepal</span>
+        <span class="origin-tag">🇲🇽 Mexico</span>
+        <span class="origin-tag">🇺🇸 USA</span>
+        <span class="origin-tag">🇨🇷 Costa Rica</span>
+        <span class="origin-tag">🇬🇹 Guatemala</span>
+        <span class="origin-tag">🇮🇳 Across India</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section class="highlights" id="highlights">
+  <div class="highlights-inner">
+    <div class="highlights-header reveal">
+      <p class="section-label">Why Meera's Farm</p>
+      <h2 class="section-title">More Than a Stay.<br><em>An Experience.</em></h2>
+    </div>
+    <div class="cards-grid reveal" style="transition-delay:0.1s">
+      <div class="highlight-card">
+        <span class="card-icon">🌿</span>
+        <h3 class="card-title">Minutes from Navi Mumbai</h3>
+        <p class="card-body">No long drives. No planning a week ahead. Meera's Farm is your spontaneous nature reset — under an hour from the city, a world apart in feeling.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="card-icon">🏛️</span>
+        <h3 class="card-title">World-Class Craftsmanship</h3>
+        <p class="card-body">Sleep beneath Saharanpur teak, surrounded by Balinese statues and Gujarat brickwork. The farm is a living museum of global artisanship.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="card-icon">🌄</span>
+        <h3 class="card-title">Mountain & City Views</h3>
+        <p class="card-body">Wake up to sweeping mountain vistas and the soft glow of the city skyline. Both nature and civilization, in perfect balance from your doorstep.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="card-icon">🕊️</span>
+        <h3 class="card-title">A Sacred, Peaceful Space</h3>
+        <p class="card-body">Alcohol-free and blessed by Lord Ganesha. Whether you seek meditation, yoga, or simply silence — Meera's Farm holds that space for you.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="card-icon">🐾</span>
+        <h3 class="card-title">Farm Life & Furry Friends</h3>
+        <p class="card-body">Meet our resident dog and cat. Explore the open grounds, relax in the gazebo, cook in the farmhouse kitchen. Life here is wonderfully slow.</p>
+      </div>
+      <div class="highlight-card">
+        <span class="card-icon">🤝</span>
+        <h3 class="card-title">Superhost Hospitality</h3>
+        <p class="card-body">Hosted by Ravi — Superhost with a 4.88 rating. On-site staff Mr. Budhaji and his wife ensure your every comfort, 24 hours a day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery">
+  <div class="gallery-inner">
+    <div class="gallery-header reveal">
+      <p class="section-label">Gallery</p>
+      <h2 class="section-title" style="color:var(--white)">See <em style="color:var(--gold-light)">Meera's Farm</em></h2>
+    </div>
+    <div class="gallery-grid reveal" style="transition-delay:0.1s">
+      <div class="gallery-item tall">
+        <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1343811467237191035/original/9a219269-e955-449c-b07a-4da0a8a7fca5.jpeg" alt="Farm exterior" class="gallery-img" style="height:100%">
+      </div>
+      <div class="gallery-item">
+        <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1343811467237191035/original/e782569b-15f4-473b-a5c3-e825c1789096.jpeg" alt="Bedroom" class="gallery-img" style="height:100%">
+      </div>
+      <div class="gallery-item">
+        <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1343811467237191035/original/c1932395-6356-4e6f-95aa-876605cb0a74.jpeg" alt="Interior" class="gallery-img" style="height:100%">
+      </div>
+      <div class="gallery-item">
+        <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1343811467237191035/original/d1590a0e-6c2b-4afc-ac07-3895f8d554b0.jpeg" alt="Farm views" class="gallery-img" style="height:100%">
+      </div>
+      <div class="gallery-item">
+        <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1343811467237191035/original/8ab1c6d0-b327-47b4-8b51-e7e1356af871.jpeg" alt="Outdoor space" class="gallery-img" style="height:100%">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section class="amenities" id="amenities">
+  <div class="amenities-inner">
+    <div class="reveal">
+      <p class="section-label">What's Included</p>
+      <h2 class="section-title">Every Comfort,<br><em>Thoughtfully Provided</em></h2>
+    </div>
+    <div class="amenities-grid reveal" style="transition-delay:0.1s">
+      <div class="amenity"><span class="amenity-icon">🛏️</span> Queen Bed with Canopy</div>
+      <div class="amenity"><span class="amenity-icon">🚿</span> Private Attached Bathroom</div>
+      <div class="amenity"><span class="amenity-icon">📶</span> High-Speed WiFi</div>
+      <div class="amenity"><span class="amenity-icon">🍳</span> Kitchen Access</div>
+      <div class="amenity"><span class="amenity-icon">🏡</span> Gazebo & Open Grounds</div>
+      <div class="amenity"><span class="amenity-icon">🚗</span> Ample Parking</div>
+      <div class="amenity"><span class="amenity-icon">🔒</span> Lock on Bedroom Door</div>
+      <div class="amenity"><span class="amenity-icon">🏙️</span> City Skyline View</div>
+      <div class="amenity"><span class="amenity-icon">⛰️</span> Mountain View</div>
+      <div class="amenity"><span class="amenity-icon">🌿</span> Courtyard Garden</div>
+      <div class="amenity"><span class="amenity-icon">👨‍🌾</span> On-Site Caretaker</div>
+      <div class="amenity"><span class="amenity-icon">🍱</span> Nearby Restaurant Menus</div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="reviews-inner">
+    <div class="reviews-header reveal">
+      <div>
+        <p class="section-label">Guest Reviews</p>
+        <h2 class="section-title">What Our Guests <em>Say</em></h2>
+      </div>
+      <div style="text-align:right">
+        <div class="rating-big">4.88</div>
+        <div class="stars-row" style="justify-content:flex-end">
+          <span class="star-gold">★</span><span class="star-gold">★</span><span class="star-gold">★</span><span class="star-gold">★</span><span class="star-gold">★</span>
+        </div>
+        <div class="rating-label">Based on 8 Airbnb reviews</div>
+      </div>
+    </div>
+    <div class="reviews-grid reveal" style="transition-delay:0.1s">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The farm is truly unlike anything near Mumbai. The collection of artifacts from around the world makes you feel like you've travelled without leaving. Incredibly peaceful and restorative."</p>
+        <p class="review-author">Airbnb Guest</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Ravi is a wonderful host — thoughtful, responsive, and clearly puts so much love into this place. The staff on site were welcoming and made sure we had everything we needed."</p>
+        <p class="review-author">Airbnb Guest</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"We came for one night and didn't want to leave. The gazebo at sunset, the mountain views, the dog who adopted us for the evening — absolute magic. We'll be back."</p>
+        <p class="review-author">Airbnb Guest</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOST -->
+<section class="host" id="host">
+  <div class="host-inner">
+    <div class="host-img-wrap reveal">
+      <img src="https://a0.muscache.com/im/users/12641227/profile_pic/1431758609/original.jpg" alt="Host Ravi" class="host-img">
+      <div class="host-badge">✦ Superhost</div>
+    </div>
+    <div class="reveal" style="transition-delay:0.15s">
+      <p class="section-label">Your Host</p>
+      <h2 class="section-title">Meet <em>Ravi</em></h2>
+      <p class="host-bio">A PhD and CEO in the pharmaceutical world, Ravi pours his passion for culture, craftsmanship, and human connection into Meera's Farm. "My obsessions are cleaning, interiors, and decent people" — and it shows in every corner of this remarkable place.</p>
+      <p class="host-bio">His farm isn't just a business. It's a personal collection, a sacred space, and an open invitation for weary city souls to breathe again.</p>
+      <div class="host-facts">
+        <div class="host-fact">
+          <div class="host-fact-label">Response Rate</div>
+          <div class="host-fact-val">100% — responds within hours</div>
+        </div>
+        <div class="host-fact">
+          <div class="host-fact-label">Hosting Since</div>
+          <div class="host-fact-val">2024 — Superhost status earned</div>
+        </div>
+        <div class="host-fact">
+          <div class="host-fact-label">Fun Fact</div>
+          <div class="host-fact-val">Souvenirs collected from every country he's visited</div>
+        </div>
+        <div class="host-fact">
+          <div class="host-fact-label">On-Site Help</div>
+          <div class="host-fact-val">Mr. Budhaji & wife — always available</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <p class="cta-label">Ready to Escape?</p>
+  <h2 class="cta-title">Your Farm Awaits.<br>Nature is Calling.</h2>
+  <p class="cta-sub">Check availability and book your stay directly on Airbnb.</p>
+  <a href="https://www.airbnb.co.in/rooms/1343811467237191035" target="_blank" class="btn-white">Book on Airbnb →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Meera's Farm</div>
+    <div class="footer-loc">Mahalungi, Raigad, Maharashtra, India</div>
+  </div>
+  <div class="footer-links">
+    <a href="#story">The Story</a>
+    <a href="#highlights">Experience</a>
+    <a href="#amenities">Amenities</a>
+    <a href="#reviews">Reviews</a>
+    <a href="https://www.airbnb.co.in/rooms/1343811467237191035" target="_blank">Book Now</a>
+  </div>
+  <div class="footer-copy">© 2026 Meera's Farm. All rights reserved.</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
